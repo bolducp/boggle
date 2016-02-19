@@ -1,0 +1,26 @@
+h1 {
+    font-family: 'Pacifico', cursive;
+    background-color: snow;
+}
+
+
+td {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: snow;
+    border: 2px solid black;
+    border-radius: 4px;
+}
+
+
+.tile {
+    height: 110px;
+    background-color: LightSteelBlue;
+    border: 2px solid snow;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.reveal {
+    display: inline-block;
+}
