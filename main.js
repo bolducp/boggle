@@ -6,11 +6,9 @@ gameApp.playerWords = [];
 
 
 function init() {
-    var boardCubes = getCubes(cubes);
-    var shuffledCubes = shuffleCubes(boardCubes);
-    console.log(shuffledCubes);
-    displayBoard(shuffledCubes);
+    $("#start").click(readyBoard);
 }
+
 
 var cubes = [
     "aaafrs", "aaeeee", "aafirs", "adennn", "aeeeem",
@@ -20,6 +18,13 @@ var cubes = [
     "fiprsy", "gorrvw", "iprrry", "nootuw", "ooottu"
 ];
 
+
+function readyBoard() {
+    var boardCubes = getCubes(cubes);
+    var shuffledCubes = shuffleCubes(boardCubes);
+    console.log(shuffledCubes);
+    displayBoard(shuffledCubes);
+}
 
 
 function getCubes(cubes) {
@@ -35,23 +40,24 @@ function shuffleCubes(cubes) {
 
 
 function displayBoard(cubes) {
+    $("tr").empty();
 
     for (var index = 0; index < cubes.length; index ++){
         switch(true) {
             case (index < 5):
-                $("#row1").append($("<td>").text(cubes[index]));
+                $("#row1").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
                 break;
             case (index >= 5 && index < 10):
-                $("#row2").append($("<td>").text(cubes[index]));
+                $("#row2").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
                 break;
             case (index >= 10 && index < 15):
-                $("#row3").append($("<td>").text(cubes[index]));
+                $("#row3").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
                 break;
             case (index >= 15 && index < 20):
-                $("#row4").append($("<td>").text(cubes[index]));
+                $("#row4").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
                 break;
             case (index >= 20 && index < 25):
-                $("#row5").append($("<td>").text(cubes[index]));
+                $("#row5").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
                 break;
         }
     }
