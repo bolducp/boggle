@@ -4,12 +4,10 @@ var gameApp = {};
 gameApp.board;
 gameApp.playerWords = [];
 
-
 function init() {
     $("#start").click(readyBoard);
     $("#enterWord").keypress(addUserWord);
 }
-
 
 var cubes = [
     "aaafrs", "aaeeee", "aafirs", "adennn", "aeeeem",
@@ -19,11 +17,10 @@ var cubes = [
     "fiprsy", "gorrvw", "iprrry", "nootuw", "ooottu"
 ];
 
-
 function readyBoard() {
     var boardCubes = getCubes(cubes);
     var shuffledCubes = shuffleCubes(boardCubes);
-    console.log(shuffledCubes);
+    gameApp.board = shuffledCubes;
     displayBoard(shuffledCubes);
 }
 
@@ -42,7 +39,6 @@ function shuffleCubes(cubes) {
 
 function displayBoard(cubes) {
     $("tr").empty();
-
     for (var index = 0; index < cubes.length; index ++){
         switch(true) {
             case (index < 5):
@@ -62,34 +58,47 @@ function displayBoard(cubes) {
                 break;
         }
     }
-};
+}
 
 
 function addUserWord(e) {
     var key = e.which;
     if(key === 13){
-        console.log($("#enterWord").val());
-        gameApp.playerWords.push($("#enterWord").val());
-        $("#userWords").append($("<li>").text($("#enterWord").val()));
+        checkWord($("#enterWord").val(), gameApp.board);
         $("#enterWord").val("");
     }
-};
+}
 
+
+
+function checkWord(word, board) {
+    if (word.length < 2) {
+        return alert("words under 2 letters in length not accepted");
+    } else if (gameApp.playerWords.indexOf(word) > -1) {
+        return alert("You've already guessed that");
+    } else if (!wordOnBoard(board, word)) {
+        return alert("Sorry. That word isn't on the board.");
+    } else if (wordList.indexOf(word) === -1) {
+        return alert("Sorry. That's not a valid English word.");
+    } else {
+    gameApp.playerWords.push(word);
+    $("#userWords").append($("<li>").text(word));
+  }
+}
 
 
 function wordOnBoard(board, word, usedIndices) {
+    var used_indices = usedIndices || [];
+    var possibleNextIndices = getPossibleNextIndices(board, usedIndices, word);
+
     if (word.length === 0){
         return true;
     }
-
-    var used_indices = usedIndices || [];
-    var possibleNextIndices = getPossibleNextIndices(board, usedIndices, word);
 
     for (var index in possibleNextIndices){
         if (typeof used_indices === "number"){
             used_indices = [used_indices];
         }
-
         used_indices.push(possibleNextIndices[index]);
         var wordFound = wordOnBoard(board, word.slice(1), used_indices);
 
@@ -100,13 +109,13 @@ function wordOnBoard(board, word, usedIndices) {
     return false;
 }
 
-
 console.log("word on board??", wordOnBoard(["s", "e", "p", "t", "q", "r", "e", "c", "n", "f", "n", "t", "t", "r", "c", "t", "s", "e", "h", "d", "w", "n", "e", "w", "a"], "set"));
+console.log("words on board TEST 2", wordOnBoard(["p", "g", "c", "r", "t", "n", "d", "e", "o", "r", "u", "o", "t", "d", "e", "e", "r", "i", "o", "l", "f", "c", "e", "s", "k"], "totrf"));
+console.log("words on board TEST 2", wordOnBoard(["p", "g", "c", "r", "t", "n", "d", "e", "o", "r", "u", "o", "t", "d", "e", "e", "r", "i", "o", "l", "f", "c", "e", "s", "k"], "relks"));
 
 
 function getPossibleNextIndices(board, usedIndices, word) {
     var possibleIndices = [];
-
     board.forEach(function(letter, index) {
         if (letter === word[0] && indexIsValid(index, usedIndices)){
             possibleIndices.push(index);
@@ -117,33 +126,20 @@ function getPossibleNextIndices(board, usedIndices, word) {
 
 
 
-console.log("possible next indices", getPossibleNextIndices(["k", "a", "i", "s", "e", "i", "t", "t", "e", "k", "a", "i", "e", "i", "t", "s"] , [1, 2], "sample"));
-
-
-
 
 
 function indexIsValid(index, usedIndices) {
-
     if (!usedIndices) {
         return true;
     }
-
     if (typeof usedIndices === "number"){
         usedIndices = [usedIndices];
     }
-
     if (usedIndices.indexOf(index) > -1) {
         return false;
     }
     return areAdjacent(index, usedIndices[usedIndices.length - 1])
 }
-
-
-console.log("index is valid", indexIsValid(0, [3, 4, 9]));
-
-
-
 
 
 function areAdjacent(index1, index2) {
@@ -159,17 +155,6 @@ function areAdjacent(index1, index2) {
 }
 
 
-console.log("ARE adjacent", areAdjacent(0, 1));
-console.log("ARE adjacent", areAdjacent(7, 8));
-
-
-
-
-
-
-
-
-/*
 var wordList = ["aa","aah","aal","aalii","aardvark","aardvarks","aardwolf","aardwolves","aargh","aarrghh","aasvogel","aasvogels","ab","aba","abaca","abacas","abaci","aback","abacus","abacuses","abaft","abalone","abalones","abampere","abamperes","abandon","abandoned","abandonee","abandoning","abandons","abase","abased","abasement","abases","abash","abashed","abashes","abashing","abashment","abashments","abasing","abatable","abate","abated","abatement","abatements","abates","abating","abatis","abator",
     "abators","abattis","abattises","abattoir","abattoirs","abaxial","abba","abbacies","abbacy","abbas","abbatial","abbe","abbes","abbess","abbesses","abbey","abbeys","abbot","abbotcy","abbots","abbreviate","abdicate","abdicated","abdicates","abdicating","abdication","abdicator","abdicators","abdomen","abdomens","abdominal","abdominals","abduce","abduced","abduces","abducing","abduct","abducted","abductee","abductees","abducting","abduction","abductions","abductor","abductors","abducts","abeam","abear",
     "abearing","abears","abed","abeigh","abele","abeles","abelia","aberdevine","aberrance","aberrancy","aberrant","aberrate","aberrated","aberrates","aberrating","aberration","abessive","abet","abetment","abetments","abets","abettal","abettals","abetted","abetter","abetters","abetting","abettor","abettors","abeyance","abeyances","abeyancies","abeyancy","abeyant","abhor","abhorred","abhorrence","abhorrency","abhorrent","abhorrer","abhorrers","abhorring","abhors","abidance","abidances","abidden","abide",
@@ -2894,5 +2879,3 @@ var wordList = ["aa","aah","aal","aalii","aardvark","aardvarks","aardwolf","aard
     "zooplastic","zooplasty","zoos","zooscopic","zooscopy","zoosperm","zoosperms","zoospore","zoospores","zoosporic","zoosporous","zootaxy","zootechny","zoothecia","zoothecial","zoothecium","zootheism","zootherapy","zoothome","zoothomes","zootomic","zootomical","zootomist","zootomists","zootomy","zootoxin","zootoxins","zootrophic","zootrophy","zootsuiter","zootype","zootypes","zootypic","zoozoo","zoozoos","zopilote","zopilotes","zoppo","zorgite","zoril","zorille","zorilles","zorillo","zorillos","zorils",
     "zorro","zorros","zos","zoster","zosters","zouk","zounds","zoundses","zowie","zucchetto","zucchettos","zucchini","zucchinis","zuchetto","zuchettos","zugzwang","zugzwangs","zumbooruck","zumbooruk","zumbooruks","zwitterion","zydeco","zygaenid","zygal","zygantrum","zygobranch","zygocactus","zygodactyl","zygodont","zygoma","zygomas","zygomata","zygomatic","zygomorphy","zygomycete","zygon","zygons","zygophyte","zygophytes","zygose","zygosis","zygosperm","zygosperms","zygosphene","zygospore","zygospores",
     "zygote","zygotes","zygotic","zymase","zymases","zyme","zymes","zymic","zymite","zymites","zymogen","zymogenic","zymoid","zymologic","zymologist","zymology","zymolysis","zymolytic","zymome","zymometer","zymometers","zymosis","zymotic","zymurgy","zythum"];
-
-    */
