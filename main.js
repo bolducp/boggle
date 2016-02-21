@@ -7,6 +7,7 @@ gameApp.playerWords = [];
 
 function init() {
     $("#start").click(readyBoard);
+    $("#enterWord").keypress(addUserWord);
 }
 
 
@@ -64,15 +65,102 @@ function displayBoard(cubes) {
 };
 
 
+function addUserWord(e) {
+    var key = e.which;
+    if(key === 13){
+        console.log($("#enterWord").val());
+        gameApp.playerWords.push($("#enterWord").val());
+        $("#userWords").append($("<li>").text($("#enterWord").val()));
+        $("#enterWord").val("");
+    }
+};
+
+
+
+function wordOnBoard(board, word, usedIndices) {
+    if (word.length === 0){
+        return true;
+    }
+
+    var used_indices = usedIndices || [];
+    var possibleNextIndices = getPossibleNextIndices(board, usedIndices, word);
+
+    for (var index in possibleNextIndices){
+        if (typeof used_indices === "number"){
+            used_indices = [used_indices];
+        }
+
+        used_indices.push(possibleNextIndices[index]);
+        var wordFound = wordOnBoard(board, word.slice(1), used_indices);
+
+        if (wordFound){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+console.log("word on board??", wordOnBoard(["s", "e", "p", "t", "q", "r", "e", "c", "n", "f", "n", "t", "t", "r", "c", "t", "s", "e", "h", "d", "w", "n", "e", "w", "a"], "set"));
+
+
+function getPossibleNextIndices(board, usedIndices, word) {
+    var possibleIndices = [];
+
+    board.forEach(function(letter, index) {
+        if (letter === word[0] && indexIsValid(index, usedIndices)){
+            possibleIndices.push(index);
+        }
+    });
+    return possibleIndices;
+}
+
+
+
+console.log("possible next indices", getPossibleNextIndices(["k", "a", "i", "s", "e", "i", "t", "t", "e", "k", "a", "i", "e", "i", "t", "s"] , [1, 2], "sample"));
 
 
 
 
 
+function indexIsValid(index, usedIndices) {
+
+    if (!usedIndices) {
+        return true;
+    }
+
+    if (typeof usedIndices === "number"){
+        usedIndices = [usedIndices];
+    }
+
+    if (usedIndices.indexOf(index) > -1) {
+        return false;
+    }
+    return areAdjacent(index, usedIndices[usedIndices.length - 1])
+}
+
+
+console.log("index is valid", indexIsValid(0, [3, 4, 9]));
 
 
 
 
+
+function areAdjacent(index1, index2) {
+    var board_length = 5;
+    var positionDiff = Math.abs(index1 - index2);
+    var sameRow = Math.floor(index1 / board_length) === Math.floor(index2 / board_length);
+
+    var diagonalAdj = (positionDiff == board_length + 1) || (positionDiff === board_length - 1  && !sameRow);
+    var horizontalAdj = positionDiff === 1  &&  sameRow;
+    var verticalAdj =  positionDiff === board_length;
+
+    return horizontalAdj || diagonalAdj || verticalAdj;
+}
+
+
+console.log("ARE adjacent", areAdjacent(0, 1));
+console.log("ARE adjacent", areAdjacent(7, 8));
 
 
 
