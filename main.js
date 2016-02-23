@@ -69,17 +69,15 @@ function addUserWord(e) {
     }
 }
 
-
-
 function checkWord(word, board) {
     if (word.length < 2) {
-        return alert("words under 2 letters in length not accepted");
+        return sweetAlert("words under 2 letters in length not accepted");
     } else if (gameApp.playerWords.indexOf(word) > -1) {
-        return alert("You've already guessed that");
+        return sweetAlert("You've already guessed that");
     } else if (!wordOnBoard(board, word)) {
-        return alert("Sorry. That word isn't on the board.");
+        return sweetAlert("Sorry. That word isn't on the board.");
     } else if (wordList.indexOf(word) === -1) {
-        return alert("Sorry. That's not a valid English word.");
+        return sweetAlert("Sorry. That's not a valid English word.");
     } else {
     gameApp.playerWords.push(word);
     $("#userWords").append($("<li>").text(word));
@@ -123,9 +121,6 @@ function getPossibleNextIndices(board, usedIndices, word) {
     });
     return possibleIndices;
 }
-
-
-
 
 
 function indexIsValid(index, usedIndices) {
