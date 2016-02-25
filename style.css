@@ -18,6 +18,13 @@ td {
     text-align: center;
 }
 
+label, h3, #enterWord {
+  display: none;
+}
+
+#header {
+  text-align: center;
+}
 
 .tile {
     height: 110px;

@@ -4,6 +4,7 @@ var gameApp = {};
 gameApp.board;
 gameApp.playerWords = [];
 
+
 function init() {
     $("#start").click(readyBoard);
     $("#enterWord").keypress(addUserWord);
@@ -22,6 +23,8 @@ function readyBoard() {
     var shuffledCubes = shuffleCubes(boardCubes);
     gameApp.board = shuffledCubes;
     displayBoard(shuffledCubes);
+    $("#enterWord").focus();
+    $("label, #enterWord").show();
 }
 
 
@@ -80,6 +83,7 @@ function checkWord(word, board) {
         return sweetAlert("Sorry. That's not a valid English word.");
     } else {
     gameApp.playerWords.push(word);
+    $("h3").show();
     $("#userWords").append($("<li>").text(word));
   }
 }
@@ -107,9 +111,31 @@ function wordOnBoard(board, word, usedIndices) {
     return false;
 }
 
+
+function findAllWords(board, wordlist) {
+  var allWords = [];
+  for (var i in wordlist){
+    if (wordOnBoard(board, wordlist[i])){
+      allWords.push(wordlist[i]);
+    }
+  }
+  return allWords;
+}
+
+
+// function findAll(board, wordlist) {
+//   return wordlist.filter(function(word){
+//     return wordOnBoard(board, word);
+//   });
+// }
+
+
+
 console.log("word on board??", wordOnBoard(["s", "e", "p", "t", "q", "r", "e", "c", "n", "f", "n", "t", "t", "r", "c", "t", "s", "e", "h", "d", "w", "n", "e", "w", "a"], "set"));
 console.log("words on board TEST 2", wordOnBoard(["p", "g", "c", "r", "t", "n", "d", "e", "o", "r", "u", "o", "t", "d", "e", "e", "r", "i", "o", "l", "f", "c", "e", "s", "k"], "totrf"));
 console.log("words on board TEST 2", wordOnBoard(["p", "g", "c", "r", "t", "n", "d", "e", "o", "r", "u", "o", "t", "d", "e", "e", "r", "i", "o", "l", "f", "c", "e", "s", "k"], "relks"));
+console.log(findAllWords(["s", "e", "p", "t", "q", "r", "e", "c", "n", "f", "n", "t", "t", "r", "c", "t", "s", "e", "h", "d", "w", "n", "e", "w", "a"], wordList));
+
 
 
 function getPossibleNextIndices(board, usedIndices, word) {
