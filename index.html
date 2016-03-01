@@ -12,14 +12,35 @@
 </head>
 <body>
   <div class="container">
-    <div id="header">
+    <div id="pageloadHeader">
       <h1>Boggle</h1>
       <br>
       <button id="start" class="btn btn-warning">Play Game</button>
     </div>
 
+
+    <!-- Modal -->
+  <div class="modal fade" id="resultsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Results</h4>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
     <div id="playingHeader">
       <h1>Boggle</h1><br>
+      <button id="restart" class="btn btn-success">New Game</button>
     </div>
       <div class="row">
         <div class="col-md-offset-1 col-md-5">
@@ -36,7 +57,7 @@
             <br>
             <label>Enter a word:</label>
             <input id="enterWord" type="text"><br><br>
-            <button id="end" class="btn btn-warning">End Game & Calculate Score</button>
+            <button id="end" class="btn btn-warning">End Game & Calculate Score</button><br>
         </div>
         <div class="col-md-3">
           <h3>Found Words</h3>

@@ -1,5 +1,6 @@
 body {
   background-color: #2eb8b8;
+    font-family: 'Philosopher', sans-serif;
 }
 
 h1 {
@@ -9,7 +10,7 @@ h1 {
 h3 {
   text-decoration: underline;
   display: none;
-  font-family: 'Philosopher', sans-serif;
+  font-family: 'Pacifico', cursive;
 }
 
 label, #enterWord {
@@ -53,7 +54,7 @@ td {
   display: none;
 }
 
-#header {
+#pageloadHeader {
   text-align: center;
 }
 

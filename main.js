@@ -6,88 +6,85 @@ gameApp.playerWords = [];
 
 
 function init() {
-    $("#start").click(readyBoard);
-    $("#enterWord").keypress(addUserWord);
+  $("#start").click(readyBoard);
+  $("#enterWord").keypress(addUserWord);
+  $("#restart").click(restart);
+  $("#end").click(showResult);
 }
 
 var cubes = [
-    "aaafrs", "aaeeee", "aafirs", "adennn", "aeeeem",
-    "aeegmu", "aegmnn", "afirsy", "bjkqxz", "ccenst",
-    "ceiilt", "ceilpt", "ceipst", "ddhnot", "dhhlor",
-    "dhlnor", "dhlnor", "eiiitt", "emottt", "ensssu",
-    "fiprsy", "gorrvw", "iprrry", "nootuw", "ooottu"
+  "aaafrs", "aaeeee", "aafirs", "adennn", "aeeeem",
+  "aeegmu", "aegmnn", "afirsy", "bjkqxz", "ccenst",
+  "ceiilt", "ceilpt", "ceipst", "ddhnot", "dhhlor",
+  "dhlnor", "dhlnor", "eiiitt", "emottt", "ensssu",
+  "fiprsy", "gorrvw", "iprrry", "nootuw", "ooottu"
 ];
 
 function readyBoard() {
-    var boardCubes = getCubes(cubes);
-    var shuffledCubes = shuffleCubes(boardCubes);
-    gameApp.board = shuffledCubes;
-    displayBoard(shuffledCubes);
-    $("#enterWord").focus();
-    $("label, #enterWord, h3, #end, #playingTitle, #restart, #playingHeader").show();
-    $("#header").hide();
+  var boardCubes = getCubes(cubes);
+  var shuffledCubes = shuffleCubes(boardCubes);
+  gameApp.board = shuffledCubes;
+  displayBoard(shuffledCubes);
+  $("#enterWord").focus();
+  $("label, #enterWord, h3, #end, #playingHeader").show();
+  $("#pageloadHeader").hide();
 }
-
 
 function getCubes(cubes) {
-    return cubes.map(function(cube) {
-        return cube[Math.floor(Math.random() * cube.length)];
-    });
+  return cubes.map(function(cube) {
+    return cube[Math.floor(Math.random() * cube.length)];
+  });
 }
-
 
 function shuffleCubes(cubes) {
-    return _.shuffle(cubes);
+  return _.shuffle(cubes);
 }
-
 
 function displayBoard(cubes) {
-    $("tr").empty();
-    for (var index = 0; index < cubes.length; index ++){
-        switch(true) {
-            case (index < 5):
-                $("#row1").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
-                break;
-            case (index >= 5 && index < 10):
-                $("#row2").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
-                break;
-            case (index >= 10 && index < 15):
-                $("#row3").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
-                break;
-            case (index >= 15 && index < 20):
-                $("#row4").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
-                break;
-            case (index >= 20 && index < 25):
-                $("#row5").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
-                break;
-        }
+  $("tr").empty();
+  for (var index = 0; index < cubes.length; index ++){
+    switch(true) {
+      case (index < 5):
+        $("#row1").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
+        break;
+      case (index >= 5 && index < 10):
+        $("#row2").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
+        break;
+      case (index >= 10 && index < 15):
+        $("#row3").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
+        break;
+      case (index >= 15 && index < 20):
+        $("#row4").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
+        break;
+      case (index >= 20 && index < 25):
+        $("#row5").append($("<td>").text(cubes[index]).addClass('animated bounceInDown'));
+        break;
     }
-}
-
-
-function addUserWord(e) {
-    var key = e.which;
-    if(key === 13){
-        checkWord($("#enterWord").val(), gameApp.board);
-        $("#enterWord").val("");
-    }
-}
-
-function checkWord(word, board) {
-    if (word.length < 2) {
-        return sweetAlert("words under 2 letters in length not accepted");
-    } else if (gameApp.playerWords.indexOf(word) > -1) {
-        return sweetAlert("You've already guessed that");
-    } else if (!wordOnBoard(board, word)) {
-        return sweetAlert("Sorry. That word isn't on the board.");
-    } else if (wordList.indexOf(word) === -1) {
-        return sweetAlert("Sorry. That's not a valid English word.");
-    } else {
-    gameApp.playerWords.push(word);
-    $("#userWords").append($("<li>").text(word));
   }
 }
 
+function addUserWord(e) {
+  var key = e.which;
+  if(key === 13){
+    checkWord($("#enterWord").val(), gameApp.board);
+    $("#enterWord").val("");
+  }
+}
+
+function checkWord(word, board) {
+  if (word.length < 2) {
+    return sweetAlert("Sorry. Words under 2 letters in length not accepted.");
+  } else if (gameApp.playerWords.indexOf(word) > -1) {
+    return sweetAlert("Sorry. You've already guessed that.");
+  } else if (!wordOnBoard(board, word)) {
+    return sweetAlert("Sorry. That word isn't on the board.");
+  } else if (wordList.indexOf(word) === -1) {
+    return sweetAlert("Sorry. That's not a valid English word.");
+  } else {
+  gameApp.playerWords.push(word);
+  $("#userWords").append($("<li>").text(word));
+}
+}
 
 function wordOnBoard(board, word, usedIndices) {
     var used_indices = usedIndices || [];
@@ -96,21 +93,19 @@ function wordOnBoard(board, word, usedIndices) {
     if (word.length === 0){
         return true;
     }
-
     for (var index in possibleNextIndices){
-        if (typeof used_indices === "number"){
-            used_indices = [used_indices];
-        }
-        used_indices.push(possibleNextIndices[index]);
-        var wordFound = wordOnBoard(board, word.slice(1), used_indices);
+      if (typeof used_indices === "number"){
+        used_indices = [used_indices];
+      }
+      used_indices.push(possibleNextIndices[index]);
+      var wordFound = wordOnBoard(board, word.slice(1), used_indices);
 
-        if (wordFound){
-            return true;
-        }
-    }
-    return false;
+      if (wordFound){
+        return true;
+      }
+  }
+  return false;
 }
-
 
 function findAllWords(board, wordlist) {
   var allWords = [];
@@ -122,51 +117,51 @@ function findAllWords(board, wordlist) {
   return allWords;
 }
 
-
-console.log("word on board??", wordOnBoard(["s", "e", "p", "t", "q", "r", "e", "c", "n", "f", "n", "t", "t", "r", "c", "t", "s", "e", "h", "d", "w", "n", "e", "w", "a"], "set"));
-console.log("words on board TEST 2", wordOnBoard(["p", "g", "c", "r", "t", "n", "d", "e", "o", "r", "u", "o", "t", "d", "e", "e", "r", "i", "o", "l", "f", "c", "e", "s", "k"], "totrf"));
-console.log("words on board TEST 2", wordOnBoard(["p", "g", "c", "r", "t", "n", "d", "e", "o", "r", "u", "o", "t", "d", "e", "e", "r", "i", "o", "l", "f", "c", "e", "s", "k"], "relks"));
-console.log(findAllWords(["s", "e", "p", "t", "q", "r", "e", "c", "n", "f", "n", "t", "t", "r", "c", "t", "s", "e", "h", "d", "w", "n", "e", "w", "a"], wordList));
-
-
-
 function getPossibleNextIndices(board, usedIndices, word) {
-    var possibleIndices = [];
-    board.forEach(function(letter, index) {
-        if (letter === word[0] && indexIsValid(index, usedIndices)){
-            possibleIndices.push(index);
-        }
-    });
-    return possibleIndices;
+  var possibleIndices = [];
+  board.forEach(function(letter, index) {
+    if (letter === word[0] && indexIsValid(index, usedIndices)){
+      possibleIndices.push(index);
+    }
+  });
+  return possibleIndices;
 }
-
 
 function indexIsValid(index, usedIndices) {
-    if (!usedIndices) {
-        return true;
-    }
-    if (typeof usedIndices === "number"){
-        usedIndices = [usedIndices];
-    }
-    if (usedIndices.indexOf(index) > -1) {
-        return false;
-    }
-    return areAdjacent(index, usedIndices[usedIndices.length - 1])
+  if (!usedIndices) {
+    return true;
+  }
+  if (typeof usedIndices === "number"){
+    usedIndices = [usedIndices];
+  }
+  if (usedIndices.indexOf(index) > -1) {
+    return false;
+  }
+  return areAdjacent(index, usedIndices[usedIndices.length - 1])
 }
-
 
 function areAdjacent(index1, index2) {
-    var board_length = 5;
-    var positionDiff = Math.abs(index1 - index2);
-    var sameRow = Math.floor(index1 / board_length) === Math.floor(index2 / board_length);
+  var board_length = 5;
+  var positionDiff = Math.abs(index1 - index2);
+  var sameRow = Math.floor(index1 / board_length) === Math.floor(index2 / board_length);
 
-    var diagonalAdj = (positionDiff == board_length + 1) || (positionDiff === board_length - 1  && !sameRow);
-    var horizontalAdj = positionDiff === 1  &&  sameRow;
-    var verticalAdj =  positionDiff === board_length;
+  var diagonalAdj = (positionDiff == board_length + 1) || (positionDiff === board_length - 1  && !sameRow);
+  var horizontalAdj = positionDiff === 1  &&  sameRow;
+  var verticalAdj =  positionDiff === board_length;
 
-    return horizontalAdj || diagonalAdj || verticalAdj;
+  return horizontalAdj || diagonalAdj || verticalAdj;
 }
 
+function showResult(){
+  $("#resultsModal").modal("show");
+  $("label, #enterWord, #end").hide();
+  $("#restart").show();
+}
+
+
+function restart() {
+  location.reload();
+}
 
 var wordList = ["aa","aah","aal","aalii","aardvark","aardvarks","aardwolf","aardwolves","aargh","aarrghh","aasvogel","aasvogels","ab","aba","abaca","abacas","abaci","aback","abacus","abacuses","abaft","abalone","abalones","abampere","abamperes","abandon","abandoned","abandonee","abandoning","abandons","abase","abased","abasement","abases","abash","abashed","abashes","abashing","abashment","abashments","abasing","abatable","abate","abated","abatement","abatements","abates","abating","abatis","abator",
     "abators","abattis","abattises","abattoir","abattoirs","abaxial","abba","abbacies","abbacy","abbas","abbatial","abbe","abbes","abbess","abbesses","abbey","abbeys","abbot","abbotcy","abbots","abbreviate","abdicate","abdicated","abdicates","abdicating","abdication","abdicator","abdicators","abdomen","abdomens","abdominal","abdominals","abduce","abduced","abduces","abducing","abduct","abducted","abductee","abductees","abducting","abduction","abductions","abductor","abductors","abducts","abeam","abear",
