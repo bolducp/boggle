@@ -1,24 +1,55 @@
 body {
-    background-color: snow;
+  background-color: #2eb8b8;
 }
 
 h1 {
-    font-family: 'Pacifico', cursive;
+  font-family: 'Pacifico', cursive;
 }
 
+h3 {
+  text-decoration: underline;
+  display: none;
+  font-family: 'Philosopher', sans-serif;
+}
+
+label, #enterWord {
+  display: none;
+  font-family: 'Philosopher', sans-serif;
+}
+
+table {
+  background-color: grey;
+}
 
 td {
-    margin: 5px;
-    padding: 5px 10px;
-    background-color: snow;
-    border: 2px solid black;
-    border-radius: 4px;
-    height: 60px;
-    width: 60px;
-    text-align: center;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #ffffe6;
+  border: 2px solid black;
+  border-radius: 4px;
+  height: 60px;
+  width: 60px;
+  text-align: center;
 }
 
-label, h3, #enterWord {
+.reveal {
+    display: inline-block;
+}
+
+.tile {
+  height: 110px;
+  background-color: LightSteelBlue;
+  border: 2px solid snow;
+  text-align: center;
+  padding-top: 5px;
+}
+
+#board {
+  margin-top: 5%;
+  margin-left: 5%;
+}
+
+#end, #restart {
   display: none;
 }
 
@@ -26,14 +57,7 @@ label, h3, #enterWord {
   text-align: center;
 }
 
-.tile {
-    height: 110px;
-    background-color: LightSteelBlue;
-    border: 2px solid snow;
-    text-align: center;
-    padding-top: 5px;
-}
-
-.reveal {
-    display: inline-block;
+#playingHeader {
+  margin-left: 20%;
+  display: none;
 }

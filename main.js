@@ -24,7 +24,8 @@ function readyBoard() {
     gameApp.board = shuffledCubes;
     displayBoard(shuffledCubes);
     $("#enterWord").focus();
-    $("label, #enterWord").show();
+    $("label, #enterWord, h3, #end, #playingTitle, #restart, #playingHeader").show();
+    $("#header").hide();
 }
 
 
@@ -83,7 +84,6 @@ function checkWord(word, board) {
         return sweetAlert("Sorry. That's not a valid English word.");
     } else {
     gameApp.playerWords.push(word);
-    $("h3").show();
     $("#userWords").append($("<li>").text(word));
   }
 }
@@ -121,14 +121,6 @@ function findAllWords(board, wordlist) {
   }
   return allWords;
 }
-
-
-// function findAll(board, wordlist) {
-//   return wordlist.filter(function(word){
-//     return wordOnBoard(board, word);
-//   });
-// }
-
 
 
 console.log("word on board??", wordOnBoard(["s", "e", "p", "t", "q", "r", "e", "c", "n", "f", "n", "t", "t", "r", "c", "t", "s", "e", "h", "d", "w", "n", "e", "w", "a"], "set"));

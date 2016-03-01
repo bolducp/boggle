@@ -7,44 +7,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-  <div id="header">
-    <h1 >Boggle</h1>
-    <br>
-    <button id="start" class="btn btn-info">Play Game</button>
-  </div>
+  <div class="container">
+    <div id="header">
+      <h1>Boggle</h1>
+      <br>
+      <button id="start" class="btn btn-warning">Play Game</button>
+    </div>
 
-    <div class="row">
-        <div class="col-xs-offset-2 col-xs-5">
-            <table id="board">
-                <tbody>
-                    <tr id="row1"></tr>
-                    <tr id="row2"></tr>
-                    <tr id="row3"></tr>
-                    <tr id="row4"></tr>
-                    <tr id="row5"></tr>
-                </tbody>
-            </table>
+    <div id="playingHeader">
+      <h1>Boggle</h1><br>
+    </div>
+      <div class="row">
+        <div class="col-md-offset-1 col-md-5">
+          <table id="board">
+            <tbody>
+              <tr id="row1"></tr>
+              <tr id="row2"></tr>
+              <tr id="row3"></tr>
+              <tr id="row4"></tr>
+              <tr id="row5"></tr>
+            </tbody>
+          </table>
             <br>
             <br>
             <label>Enter a word:</label>
-            <input id="enterWord" type="text">
+            <input id="enterWord" type="text"><br><br>
+            <button id="end" class="btn btn-warning">End Game & Calculate Score</button>
         </div>
-        <div class="col-xs-3">
-            <h3>Entered Words:</h3>
-                <ul id="userWords"></ul>
+        <div class="col-md-3">
+          <h3>Found Words</h3>
+            <ul id="userWords"></ul>
         </div>
-    </div>
-    <br>
-    <br>
-
-
-
-
-</div>
+      </div>
+      <br>
+      <br>
+  </div>
 
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
