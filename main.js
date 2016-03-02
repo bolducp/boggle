@@ -152,12 +152,23 @@ function areAdjacent(index1, index2) {
   return horizontalAdj || diagonalAdj || verticalAdj;
 }
 
-function showResult(){
+function showResult() {
+  var numWords = gameApp.playerWords.length;
+  var totalScore = calculateScore();
+  $("#numWords").text(numWords);
+  $("#score").text(totalScore);
   $("#resultsModal").modal("show");
   $("label, #enterWord, #end").hide();
   $("#restart").show();
 }
 
+function calculateScore() {
+  var score = 0;
+  for (var i in gameApp.playerWords){
+    score += gameApp.playerWords[i].length;
+  }
+  return score;
+}
 
 function restart() {
   location.reload();
